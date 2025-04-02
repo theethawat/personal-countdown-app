@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from "react";
-import styles from "./App.module.css"; // Import CSS module
+import axios from "axios";
 
 function App() {
   const [data, setData] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/data");
-        const jsonData = await response.json();
-        setData(jsonData.message);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      axios
+        .get("http://localhost:8000/data")
+        .then((response) => {
+          console.log(response.data);
+          setData(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
     };
 
     fetchData();
   }, []);
 
-  return (
-    <div className={styles.container}>
-      <div className={styles.content}>{data || "Loading..."}</div>
-      <div className={styles.footer}>
-        Copyright © {new Date().getFullYear()} Onur Sasmaz
-      </div>
-    </div>
-  );
+  return <div></div>;
 }
 
 export default App;
