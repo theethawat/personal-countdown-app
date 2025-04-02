@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function App() {
-  const [data, setData] = useState("");
+  const [allEvents, setAllEvents] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       axios
-        .get("http://localhost:8000/data")
+        .get("http://localhost:8000/api/v1/")
         .then((response) => {
           console.log(response.data);
-          setData(response.data);
+          setAllEvents(response.data);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);

@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const db = require("./config/db.js");
+const db = require("./db.js");
 
 app.use(cors());
 app.use(express.json());
@@ -10,9 +10,9 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello from the backend!" });
 });
 
-app.post("/api/v1/", (req, res) => {
+app.post("/api/v1/events/", (req, res) => {
   const { name, date } = req.body;
-  const sql = `INSERT INTO timeline (name, date) VALUES (?, ?)`;
+  const sql = `INSERT INTO events (name, date) VALUES (?, ?)`;
   db.run(sql, [name, date], function (err) {
     if (err) {
       return console.error(err.message);
@@ -21,8 +21,8 @@ app.post("/api/v1/", (req, res) => {
   });
 });
 
-app.get("/data", (req, res) => {
-  const sql = `SELECT * FROM timeline`;
+app.get("/api/v1/events/", (req, res) => {
+  const sql = `SELECT * FROM events`;
   db.all(sql, [], (err, rows) => {
     if (err) {
       return console.error(err.message);
@@ -31,8 +31,8 @@ app.get("/data", (req, res) => {
   });
 });
 
-app.get("/api/v1/:id", (req, res) => {
-  const sql = `SELECT * FROM timeline WHERE ID = ?`;
+app.get("/api/v1/events/:id", (req, res) => {
+  const sql = `SELECT * FROM events WHERE ID = ?`;
   db.get(sql, [req.params.id], (err, row) => {
     if (err) {
       return console.error(err.message);
@@ -41,9 +41,9 @@ app.get("/api/v1/:id", (req, res) => {
   });
 });
 
-app.put("/api/v1/:id", (req, res) => {
+app.put("/api/v1/events/:id", (req, res) => {
   const { name, date } = req.body;
-  const sql = `UPDATE timeline SET name = ?, date = ? WHERE ID = ?`;
+  const sql = `UPDATE events SET name = ?, date = ? WHERE ID = ?`;
   db.run(sql, [name, date, req.params.id], function (err) {
     if (err) {
       return console.error(err.message);
@@ -52,14 +52,22 @@ app.put("/api/v1/:id", (req, res) => {
   });
 });
 
-app.delete("/api/v1/:id", (req, res) => {
-  const sql = `DELETE FROM timeline WHERE ID = ?`;
+app.delete("/api/v1/events/:id", (req, res) => {
+  const sql = `DELETE FROM events WHERE ID = ?`;
   db.run(sql, [req.params.id], function (err) {
     if (err) {
       return console.error(err.message);
     }
     res.json({ changes: this.changes });
   });
+});
+
+app.get("/", (req, res) => {
+  res.json({ message: "Hello from the backend!" });
+});
+
+app.get("/api/v1/", (req, res) => {
+  res.json({ message: "API Path is work" });
 });
 
 app.listen(8000, () => {
