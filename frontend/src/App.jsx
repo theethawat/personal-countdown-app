@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  FluentProvider,
+  webLightTheme,
+  TabList,
+  Tab,
+} from "@fluentui/react-components";
+import useStyles from "./style";
 
 function App() {
   const [allEvents, setAllEvents] = useState("");
+  const styles = useStyles();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +28,14 @@ function App() {
     fetchData();
   }, []);
 
-  return <div></div>;
+  return (
+    <FluentProvider theme={webLightTheme}>
+      <TabList>
+        <Tab value='tab1'>แสดงผล</Tab>
+        <Tab value='tab2'>ตั้งต่า</Tab>
+      </TabList>
+    </FluentProvider>
+  );
 }
 
 export default App;
