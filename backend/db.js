@@ -10,7 +10,7 @@ function createTable(db) {
       (
         ID INTEGER PRIMARY KEY AUTOINCREMENT,
         name   VARCHAR(50) NOT NULL,
-        date   DATE NOT NULL,
+        date   DATE NOT NULL
       );
     `);
     console.log("Table created successfully");
@@ -21,6 +21,7 @@ function createTable(db) {
 
 function createDbConnection() {
   if (fs.existsSync(filepath)) {
+    console.log("Database file already exists.");
     return new sqlite3.Database(filepath);
   } else {
     const db = new sqlite3.Database(filepath, (error) => {

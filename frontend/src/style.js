@@ -1,4 +1,4 @@
-import { makeStyles } from "@fluentui/react-components";
+import { makeStyles, typographyStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
   root: {
@@ -6,8 +6,15 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
-    padding: "50px 20px",
+    padding: "20px 20px",
     rowGap: "20px",
+  },
+  title: typographyStyles.subtitle1,
+  card: {
+    margin: "auto",
+    width: "720px",
+    maxWidth: "100%",
+    marginBlock: "20px",
   },
 });
 
